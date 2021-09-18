@@ -26,12 +26,22 @@ errorSource.displayErrorAtPointer(
   'Pointing at property "about" - shortening output'
 )
 
+errorSource.displayWarningAtPointer(
+  '/2/about',
+  'Pointing at property "about" - shortening output'
+)
+
 errorSource.displayErrorAtPointer(
   '/1/friends/2/name',
   'Pointing at deep property "name"'
 )
 
 errorSource.displayErrorAtPointer(
+  '/4',
+  'Pointing at whole root level object - shortening output'
+)
+
+errorSource.displayWarningAtPointer(
   '/4',
   'Pointing at whole root level object - shortening output'
 )

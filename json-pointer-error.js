@@ -81,18 +81,28 @@ class JsonPointerError {
     return this
   }
 
-  displayErrorAtPointer(errorJsonPointer, errorMessage = false) {
+  displayWarningAtPointer(errorJsonPointer, errorMessage = false) {
+    this.displayErrorAtPointer(errorJsonPointer, errorMessage, true)
+  }
+
+  displayErrorAtPointer(
+    errorJsonPointer,
+    errorMessage = false,
+    warningMode = false
+  ) {
     const place = this.mapped.pointers[errorJsonPointer]
+
+    const colorIt = warningMode ? chalk.yellow : chalk.red
 
     if (errorMessage) {
       this.onOutputLine(
-        chalk.red(
+        colorIt(
           '+--------------------------------------------------------------------------'
         )
       )
-      this.onOutputLine(chalk.red('| ') + errorMessage)
+      this.onOutputLine(colorIt('| ') + errorMessage)
       this.onOutputLine(
-        chalk.red(
+        colorIt(
           '+--------------------------------------------------------------------------'
         )
       )
@@ -153,11 +163,15 @@ class JsonPointerError {
           continue
         }
         if (lineNo < errorStart || lineNo > errorEnd) {
+          let contents = this.dataStrLines[lineNo]
+          if (contents.length > 120) {
+            contents = this.dataStrLines[lineNo].substring(0, 120) + '...'
+          }
           this.onOutputLine(
             chalk.gray('  ') +
               chalk.gray(this.padDigits(lineNo, digitsWidth)) +
               chalk.gray(' | ') +
-              chalk.white(this.dataStrLines[lineNo])
+              chalk.white(contents)
           )
         } else {
           if (lineNo == errorSkipStart) {
@@ -171,11 +185,15 @@ class JsonPointerError {
             continue
           }
 
+          let contents = this.dataStrLines[lineNo]
+          if (contents.length > 120) {
+            contents = this.dataStrLines[lineNo].substring(0, 120) + '...'
+          }
           this.onOutputLine(
-            chalk.red.bold('> ') +
-              chalk.red.bold(this.padDigits(lineNo, digitsWidth)) +
+            colorIt.bold('> ') +
+              colorIt.bold(this.padDigits(lineNo, digitsWidth)) +
               chalk.gray(' | ') +
-              chalk.red(this.dataStrLines[lineNo])
+              colorIt(contents)
           )
         }
       }

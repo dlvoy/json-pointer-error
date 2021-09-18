@@ -1,6 +1,6 @@
 {
   "name": "json-pointer-error",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Highligts error in JSON file pointed by given JSON Pointer (RFC 6901)",
   "main": "json-pointer-error.js",
   "scripts": {
